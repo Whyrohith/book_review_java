@@ -34,4 +34,4 @@ build/
 
 
 ### ENV ###
-!**/src/resorces/.env
+!**/src/main/resorces/.env
