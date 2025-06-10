@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class UsersService {
@@ -20,9 +21,9 @@ public class UsersService {
         this.password = pass;
     }
 
-//    public Reviews verify(Users user){
-//
-//    }
+    public List<Users> allUsers() {
+        return userRepository.findAll();
+    }
 
     public Users addUser(Users newUser) {
         if(newUser.getPassword() !=  null){

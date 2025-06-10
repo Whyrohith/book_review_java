@@ -3,6 +3,7 @@ package Book.Reviews.Book.reviews.Services;
 
 import Book.Reviews.Book.reviews.Entity.Books;
 import Book.Reviews.Book.reviews.Repository.BookRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -35,5 +36,17 @@ public class BooksService {
             book.setUpdatedAt(LocalDateTime.now());
         }
         return bookRepository.save(book);
+    }
+
+    @Transactional
+    public Books deleteBook(String isbn){
+        Optional<Books> bookOptional = bookRepository.findByIsbn(isbn);
+        if(bookOptional.isPresent()){
+            Books bookToDelete = bookOptional.get();
+            bookRepository.delete(bookToDelete);
+            return bookToDelete;
+        }else {
+            throw new RuntimeException("Book with" + isbn + "is not found");
+        }
     }
 }

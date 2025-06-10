@@ -1,5 +1,6 @@
 package Book.Reviews.Book.reviews.Controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import Book.Reviews.Book.reviews.Entity.Reviews;
@@ -21,17 +22,17 @@ public class UsersController {
         this.usersService = usersService;
     }
 
+    @GetMapping("/allUsers")
+    public ResponseEntity<List<Users>> getAllUsers(){
+        return new ResponseEntity<List<Users>>(usersService.allUsers(), HttpStatus.OK);
+    }
 
-//    @GetMapping("/login")
-//    public ResponseEntity<Optional<Reviews>> login(@RequestBody Users user){
-//        return usersService.verify(user);
-//    }
+
     @PostMapping("/registration")
     public ResponseEntity<Users> addUser(@RequestBody Users user){
         Users savedUser = usersService.addUser(user);
         return new ResponseEntity<Users>(savedUser, HttpStatus.CREATED);
     }
-
 
 
 }

@@ -22,7 +22,7 @@ public class BookController {
         this.booksService = booksService;
     }
 
-    @GetMapping
+    @GetMapping("/allBooks")
     public ResponseEntity<List<Books>> getAllBooks(){
         return new ResponseEntity<List<Books>>(booksService.allBooks(), HttpStatus.OK);
     }
@@ -36,5 +36,17 @@ public class BookController {
     @PostMapping("/addBook")
     public ResponseEntity<Books> addBook(@RequestBody Books book){
         return new ResponseEntity<Books>(booksService.addBook(book),HttpStatus.CREATED);
+    }
+
+
+    @DeleteMapping("/deleteBook/{isbn}")
+    public ResponseEntity<Void> deleteBook(@PathVariable String isbn){
+        try{
+            booksService.deleteBook(isbn);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (RuntimeException e){
+            System.err.println("Error deleting book: "+ e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
