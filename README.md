@@ -15,5 +15,5 @@
 ### Language: Java
 ### Framework: Spring Boot
 ### Database: MySQL
-### Build Tool: Maven / Gradle
+### Build Tool: Maven
 ### Architecture: Microservice
