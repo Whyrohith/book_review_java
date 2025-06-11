@@ -1,5 +1,6 @@
 package Book.Reviews.Book.reviews.Services;
 
+import Book.Reviews.Book.reviews.Entity.MyUserDetails;
 import Book.Reviews.Book.reviews.Entity.Users;
 import Book.Reviews.Book.reviews.Repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,7 +17,7 @@ import java.util.Collections;
 @Service
 public class CustomUserDetailsService  implements UserDetailsService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
 
     public CustomUserDetailsService (UserRepository userRepo){
@@ -29,10 +30,6 @@ public class CustomUserDetailsService  implements UserDetailsService {
         Users user = userRepository.findByName(userName)
                 .orElseThrow(() -> new UsernameNotFoundException("username is not found" + userName));
 
-        return new User(
-                user.getName(),
-                user.getPassword(),
-                authorities
-        );
+        return new MyUserDetails(user);
     }
 }
