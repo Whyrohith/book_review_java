@@ -2,9 +2,7 @@ package Book.Reviews.Book.reviews.Controller;
 
 
 import Book.Reviews.Book.reviews.Entity.Books;
-import Book.Reviews.Book.reviews.Repository.BookRepository;
 import Book.Reviews.Book.reviews.Services.BooksService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +16,8 @@ public class BookController {
 
     private final BooksService booksService;
 
-    public BookController(BooksService booksService) {
+    public BookController(BooksService booksService)
+    {
         this.booksService = booksService;
     }
 
@@ -40,13 +39,15 @@ public class BookController {
 
 
     @DeleteMapping("/deleteBook/{isbn}")
-    public ResponseEntity<Void> deleteBook(@PathVariable String isbn){
-        try{
-            booksService.deleteBook(isbn);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }catch (RuntimeException e){
-            System.err.println("Error deleting book: "+ e.getMessage());
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<String> deleteBook(@PathVariable String isbn){
+        Books deletedBook = booksService.deleteBook(isbn);
+
+        if(deletedBook != null) {
+            return new ResponseEntity<String>("Deleted book: " + deletedBook.getTitle(), HttpStatus.OK);
+        }else{
+
+            return new ResponseEntity<String>("Book Not found", HttpStatus.NOT_FOUND);
         }
+
     }
 }
