@@ -27,6 +27,9 @@ public class BooksService {
         return bookRepository.findByIsbn(isbn);
     }
 
+
+    public Optional<Books> findByName(String name) {return bookRepository.findByTitle(name);}
+
     public Books addBook(Books book){
         if (book.getCreatedAt() == null) {
             book.setCreatedAt(LocalDateTime.now());
