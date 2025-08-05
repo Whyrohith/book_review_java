@@ -10,7 +10,6 @@ import lombok.Setter;
 public class AddReview {
 
     private String bookName;
-    private String userName;
     private String comment;
     private Integer rating;
 
@@ -19,7 +18,6 @@ public class AddReview {
     public String toString(){
         return "AddReview{ " +
                 "Book Name = " + bookName +
-                ", User Name = " + userName +
                 "}";
     }
 }

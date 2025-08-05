@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -34,6 +35,12 @@ public class ReviewsController {
     @PostMapping("/addReview")
     public ResponseEntity<Reviews> addReview(@RequestBody AddReview review){
        return new ResponseEntity<Reviews>(reviewsService.addReview(review), HttpStatus.CREATED);
+    }
+
+
+    @GetMapping("/myReviews")
+    public ResponseEntity<Optional<List<Reviews>>> myReviews(){
+        return new ResponseEntity<Optional<List<Reviews>>>(reviewsService.getUserReview(), HttpStatus.OK);
     }
 
 }

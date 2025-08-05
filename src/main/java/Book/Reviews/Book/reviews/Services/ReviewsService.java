@@ -8,6 +8,8 @@ import Book.Reviews.Book.reviews.Repository.BookRepository;
 import Book.Reviews.Book.reviews.Repository.ReviewsRepository;
 import Book.Reviews.Book.reviews.Repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -32,6 +34,23 @@ public class ReviewsService {
         return reviewsRepository.findAll();
     }
 
+
+    public String getCurrentUser(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getName();
+    }
+
+
+    public Optional<List<Reviews>> getUserReview(){
+
+        String currName = getCurrentUser();
+        Optional<Users> user = userRepository.findByName(currName);
+
+        return reviewsRepository.findByUser(user);
+
+    }
+
+
     public Reviews addReview(AddReview addreview){
 
          Reviews review = new Reviews();
@@ -45,7 +64,7 @@ public class ReviewsService {
         }
 
 
-        Optional<Users> addeduser = userRepository.findByName(addreview.getUserName());
+        Optional<Users> addeduser = userRepository.findByName(getCurrentUser());
 
         Optional<Books> addedBook = bookRepository.findByTitle(addreview.getBookName());
 
@@ -58,15 +77,20 @@ public class ReviewsService {
         if(addeduser.isPresent()){
             review.setUser(addeduser.get());
         }  else {
-            throw new RuntimeException("User not found: " + addreview.getUserName());
+            throw new RuntimeException("User not found: " + getCurrentUser());
         }
-        
+
+        Optional<Reviews> existBook = reviewsRepository.findByUserAndBook(addeduser, addedBook);
+
+        if(existBook.isPresent()) return existBook.get();
+
         review.setComment(addreview.getComment());
         review.setRating(addreview.getRating());
         
         review.setCreatedAt(LocalDateTime.now());
         review.setCreatedAt(LocalDateTime.now());
-        review.toString();
+//        review.toString();
+
         
         return reviewsRepository.save(review);
     }
