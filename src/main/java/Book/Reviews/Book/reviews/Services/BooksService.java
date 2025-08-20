@@ -1,7 +1,7 @@
 package Book.Reviews.Book.reviews.Services;
 
-
 import Book.Reviews.Book.reviews.Entity.Books;
+import Book.Reviews.Book.reviews.Exception.BookNotFoundException;
 import Book.Reviews.Book.reviews.Repository.BookRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,11 @@ public class BooksService {
     }
 
     public Optional<Books> findByIsbn(String isbn){
-        return bookRepository.findByIsbn(isbn);
+        Optional<Books> book = bookRepository.findByIsbn(isbn);
+        if(book.isEmpty()){
+            throw new BookNotFoundException("Book with Isbn number is not found");
+        }
+        return book;
     }
 
 
@@ -49,7 +53,7 @@ public class BooksService {
             bookRepository.delete(bookToDelete);
             return bookToDelete;
         }else {
-            throw new RuntimeException("Book with" + isbn + "is not found");
+            throw new BookNotFoundException("Book with " + isbn + " is not found");
         }
     }
 }

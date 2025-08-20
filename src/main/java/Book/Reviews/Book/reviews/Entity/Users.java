@@ -1,6 +1,7 @@
 package Book.Reviews.Book.reviews.Entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,6 +23,7 @@ public class Users {
     private long id;
     @Column(name = "username")
     private String name;
+    @JsonIgnore
     @Column(name = "password_hash")
     private String password;
     private String email;

@@ -4,6 +4,7 @@ import Book.Reviews.Book.reviews.Entity.AddReview;
 import Book.Reviews.Book.reviews.Entity.Books;
 import Book.Reviews.Book.reviews.Entity.Reviews;
 import Book.Reviews.Book.reviews.Entity.Users;
+import Book.Reviews.Book.reviews.Exception.ReviewsNotFoundException;
 import Book.Reviews.Book.reviews.Repository.BookRepository;
 import Book.Reviews.Book.reviews.Repository.ReviewsRepository;
 import Book.Reviews.Book.reviews.Repository.UserRepository;
@@ -46,7 +47,13 @@ public class ReviewsService {
         String currName = getCurrentUser();
         Optional<Users> user = userRepository.findByName(currName);
 
-        return reviewsRepository.findByUser(user);
+        Optional<List<Reviews>> listReviews = reviewsRepository.findByUser(user);
+
+        if(listReviews.isEmpty()){
+            throw new ReviewsNotFoundException("No Reviews are Present");
+        }
+
+        return listReviews;
 
     }
 
@@ -89,9 +96,7 @@ public class ReviewsService {
         
         review.setCreatedAt(LocalDateTime.now());
         review.setCreatedAt(LocalDateTime.now());
-//        review.toString();
-
-        
+//      review.toString();
         return reviewsRepository.save(review);
     }
 
