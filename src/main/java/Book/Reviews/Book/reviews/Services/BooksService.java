@@ -23,8 +23,8 @@ public class BooksService {
         return bookRepository.findAll();
     }
 
-    public Optional<Books> findByIsbn(String isbn){
-        Optional<Books> book = bookRepository.findByIsbn(isbn);
+    public Optional<Books> findByTitle(String title){
+        Optional<Books> book = bookRepository.findByTitle(title);
         if(book.isEmpty()){
             throw new BookNotFoundException("Book with Isbn number is not found");
         }
@@ -47,7 +47,7 @@ public class BooksService {
 
     @Transactional
     public Books deleteBook(String isbn){
-        Optional<Books> bookOptional = bookRepository.findByIsbn(isbn);
+        Optional<Books> bookOptional = bookRepository.findByTitle(isbn);
         if(bookOptional.isPresent()){
             Books bookToDelete = bookOptional.get();
             bookRepository.delete(bookToDelete);

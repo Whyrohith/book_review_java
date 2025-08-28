@@ -46,14 +46,7 @@ public class ReviewsService {
 
         String currName = getCurrentUser();
         Optional<Users> user = userRepository.findByName(currName);
-
-        Optional<List<Reviews>> listReviews = reviewsRepository.findByUser(user);
-
-        if(listReviews.isEmpty()){
-            throw new ReviewsNotFoundException("No Reviews are Present");
-        }
-
-        return listReviews;
+        return reviewsRepository.findByUser(user);
 
     }
 

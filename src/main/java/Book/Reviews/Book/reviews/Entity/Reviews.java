@@ -28,7 +28,7 @@ public class Reviews{
     @JoinColumn(name = "book_id", nullable = false)
     private Books book;
 
-    @ManyToOne // Many Reviews can belong to One Book
+    @ManyToOne// Many Reviews can belong to One Book
     @JoinColumn(name = "user_id", nullable = false)
     private Users user;
 

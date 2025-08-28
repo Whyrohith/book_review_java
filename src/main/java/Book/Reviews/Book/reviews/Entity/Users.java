@@ -23,7 +23,7 @@ public class Users {
     private long id;
     @Column(name = "username")
     private String name;
-    @JsonIgnore
+
     @Column(name = "password_hash")
     private String password;
     private String email;

@@ -28,4 +28,19 @@ public class CustomizedExceptionHandler extends ResponseEntityExceptionHandler {
         ErrorsDetails errorsDetails = new ErrorsDetails(LocalDateTime.now(), ex.getMessage(), request.getDescription(false));
         return new ResponseEntity<>(errorsDetails, HttpStatus.NOT_FOUND);
     }
+
+
+
+    @ExceptionHandler(ReviewsNotFoundException.class)
+    public final ResponseEntity<ErrorsDetails> handleReviewsNotFoundExcepitons(Exception ex, WebRequest request){
+        ErrorsDetails errorsDetails = new ErrorsDetails(LocalDateTime.now(), ex.getMessage(), request.getDescription(false));
+        return new ResponseEntity<>(errorsDetails, HttpStatus.NOT_FOUND);
+    }
+
+
+    @ExceptionHandler(SearchQueryFailedError.class)
+    public final ResponseEntity<ErrorsDetails> handleHttpQueryException(Exception ex, WebRequest request){
+        ErrorsDetails errorsDetails = new ErrorsDetails(LocalDateTime.now(), ex.getMessage(), request.getDescription(false));
+        return new ResponseEntity<>(errorsDetails, HttpStatus.NOT_FOUND);
+    }
 }

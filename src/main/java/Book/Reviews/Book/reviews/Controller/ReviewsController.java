@@ -4,12 +4,16 @@ package Book.Reviews.Book.reviews.Controller;
 import Book.Reviews.Book.reviews.Entity.AddReview;
 import Book.Reviews.Book.reviews.Entity.Reviews;
 import Book.Reviews.Book.reviews.Services.ReviewsService;
+import org.springframework.boot.autoconfigure.graphql.GraphQlProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+
+import static org.springframework.http.ResponseEntity.ok;
 
 
 @RestController
@@ -39,8 +43,9 @@ public class ReviewsController {
 
 
     @GetMapping("/myReviews")
-    public ResponseEntity<Optional<List<Reviews>>> myReviews(){
-        return new ResponseEntity<Optional<List<Reviews>>>(reviewsService.getUserReview(), HttpStatus.OK);
+    public ResponseEntity<List<Reviews>> myReviews(){
+        List<Reviews>  resultReviews = reviewsService.getUserReview().orElse(Collections.emptyList());
+        return ResponseEntity.ok(resultReviews);
     }
 
 }

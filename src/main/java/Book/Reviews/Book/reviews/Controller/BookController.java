@@ -6,9 +6,8 @@ import Book.Reviews.Book.reviews.Services.BooksService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/api/books")
@@ -26,9 +25,10 @@ public class BookController {
         return new ResponseEntity<List<Books>>(booksService.allBooks(), HttpStatus.OK);
     }
 
-    @GetMapping("/{isbn}")
-    public ResponseEntity<Optional<Books>> singleBook(@PathVariable String isbn){
-        return new ResponseEntity<Optional<Books>>(booksService.findByIsbn(isbn), HttpStatus.OK);
+    @GetMapping("/{title}")
+    public ResponseEntity<Books> singleBook(@PathVariable String title){
+        Books resultBook = booksService.findByTitle(title).orElse(null);
+        return ResponseEntity.ok(resultBook);
 
     }
 
