@@ -5,8 +5,8 @@
 
 # ✨ Features (Planned)
 ### User registration and authentication(Implemented)
-### Add/view/edit/delete book reviews
-### Book data integration (e.g., from Open Library API)
+### Add/view/edit/delete book reviews(Implemented)
+### Book data integration (e.g., from Open Library API)(Implemented Search books from open library)
 ### RESTful endpoints
 ### Spring Boot-based architecture
 ### SQL database integration(Implemented)
