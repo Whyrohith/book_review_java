@@ -17,3 +17,8 @@
 ### Database: MySQL
 ### Build Tool: Maven
 ### Architecture: Microservice
+
+
+### To run this program clone the repository in your local machine and run docker-compose up
+
+### Read API documentation to know the API's
